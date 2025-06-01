@@ -1,0 +1,16 @@
+<!-- form/templates/form/apply.html -->
+
+{% if success %}
+  <script>
+    alert("동아리 신청이 완료되었습니다!");
+    window.location.href = "/";  // 메인 페이지 주소로 이동
+  </script>
+{% endif %}
+
+<h1>{{ club.name }} 신청서</h1>
+
+<form action="{% url 'form:apply_club' club.id %}" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">제출</button>
+</form>

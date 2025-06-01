@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>동아리 목록</title>
+    {# 추후 CSS 사용 시 static 파일 로드 #}
+    {# {% load static %} #}
+</head>
+<body>
+    <div style="text-align: right; margin: 10px;">
+    {% if user.is_authenticated %}
+        <a href="{% url 'sign:logout' %}">로그아웃</a>
+        <a href="{% url 'form_list:application_list' %}">신청내역</a>
+    {% else %}
+        <a href="{% url 'sign:login' %}">로그인</a>
+        <a href="{% url 'sign:signup' %}">회원가입</a>
+    {% endif %}
+
+</div>
+
+
+    <h1>동아리 목록</h1>
+    <ul>
+        {% for club in clubs %}
+            <li>
+                <a href="{% url 'club:club_detail' club.id %}">{{ club.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

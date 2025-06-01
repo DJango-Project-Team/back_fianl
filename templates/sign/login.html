@@ -1,0 +1,25 @@
+<!-- templates/sign/login.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>로그인</title>
+</head>
+<body>
+    <h2>로그인</h2>
+    {% if error %}
+        <script>alert("{{ error }}");</script>
+    {% endif %}
+    <form action="{% url "sign:login" %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <input type="text" name="student_id">
+        <input type="password" name="password">
+        <button type="submit">로그인</button>
+    </form>
+
+    <!-- sign/templates/sign/login.html -->
+    {% if request.GET.message %}
+    <script>alert("{{ request.GET.message }}");</script>
+    {% endif %}
+</body>
+</html>
