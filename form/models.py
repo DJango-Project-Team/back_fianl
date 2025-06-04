@@ -9,7 +9,7 @@ class Application(models.Model):
     email = models.EmailField()
     motivation = models.TextField()
     spec = models.TextField()
-    club_id = models.ForeignKey(Club, on_delete=models.CASCADE)  # 또는 ForeignKey
+    club = models.ForeignKey(Club, on_delete=models.CASCADE)  # 또는 ForeignKey
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

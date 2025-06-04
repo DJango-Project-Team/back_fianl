@@ -1,0 +1,27 @@
+<!-- form_list/templates/form_list/my_applications.html -->
+{% extends 'club/main.html' %}
+
+{% block content %}
+<h2>신청 내역</h2>
+
+<table border="1">
+    <tr>
+        <th>번호</th>
+        <th>상태</th>
+        <th>동아리 이름</th>
+        <th>신청일</th>
+        <th>상세 내역</th>
+    </tr>
+    {% for app in applications %}
+    <tr>
+        <td>{{ app.display_number }}</td>
+        <td>{{ app.status }}</td>
+        <td>{{ app.club.name }}</td>
+        <td>{{ app.created_at|date:"Y-m-d H:i" }}</td>
+        <td><button disabled>상세보기</button></td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">신청한 내역이 없습니다.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

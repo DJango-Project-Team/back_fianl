@@ -1,0 +1,58 @@
+<!-- form_list/templates/form_list/application_list.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>신청 내역</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>신청 내역</h2>
+
+    {% if applications %}
+        <table>
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>상태</th>
+                    <th>지원동아리</th>
+                    <th>신청일</th>
+                    <th>상세내역</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in applications %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ app.status }}</td>
+                    <td>{{ app.club.name }}</td>
+                    <td>{{ app.submitted_at|date:"Y-m-d" }}</td>
+                    <td><button disabled>상세내역더보기</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>신청 내역이 없습니다.</p>
+    {% endif %}
+</body>
+</html>

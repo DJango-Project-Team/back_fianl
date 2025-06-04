@@ -1,3 +1,4 @@
 from django.contrib import admin
+from .models import UserApplication  # 변경된 모델명
 
-# Register your models here.
+admin.site.register(UserApplication)

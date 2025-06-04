@@ -1,28 +1,30 @@
-# form/views.py
-
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
-from .forms import ApplicationFormModelForm
-from club.models import Club
+from django.shortcuts import render
 
-@login_required(login_url="/sign/login/")  # 경로 수정
-def apply_view(request, club_id):
-    club = get_object_or_404(Club, id=club_id)
-    success = False
+from club.models import Club
+from form_list.models import UserApplication
+from .forms import ApplicationFormModelForm
+
+@login_required(login_url='/sign/login/')
+def submit_application(request, club_id):
+    club = Club.objects.get(id=club_id)
 
     if request.method == 'POST':
         form = ApplicationFormModelForm(request.POST)
         if form.is_valid():
             application = form.save(commit=False)
+            application.user = request.user  # 만약 user 필드가 있다면 추가
             application.club = club
-            application.user = request.user  # 로그인된 사용자 정보 저장
             application.save()
-            success = True
+            # UserApplication도 저장
+            UserApplication.objects.create(
+                user=request.user,
+                club=club,
+            )
+            # 추가 처리 (messages 등)
+            return render(request, 'form/apply.html', {'club': club, 'success': True, 'form': form})
+
     else:
         form = ApplicationFormModelForm()
 
-    return render(request, 'form/apply.html', {
-        'form': form,
-        'club': club,
-        'success': success
-    })
+    return render(request, 'form/apply.html', {'club': club, 'form': form})
