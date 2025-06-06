@@ -1,4 +1,5 @@
 <!-- form_list/templates/form_list/application_list.html -->
+{#신청내역 전체 보여주기#}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -46,7 +47,11 @@
                     <td>{{ app.status }}</td>
                     <td>{{ app.club.name }}</td>
                     <td>{{ app.submitted_at|date:"Y-m-d" }}</td>
-                    <td><button disabled>상세내역더보기</button></td>
+                    <td>
+                        <a href="{% url 'form_list:application_detail' app.id %}">
+                            <button type="button">상세내역 더보기</button>
+                        </a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

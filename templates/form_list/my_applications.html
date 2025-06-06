@@ -18,7 +18,11 @@
         <td>{{ app.status }}</td>
         <td>{{ app.club.name }}</td>
         <td>{{ app.created_at|date:"Y-m-d H:i" }}</td>
-        <td><button disabled>상세보기</button></td>
+        <td>
+        <a href="{% url 'form_list:application_detail' application.id %}">
+            <button type="button">상세내역 더보기</button>
+        </a>
+</td>
     </tr>
     {% empty %}
     <tr><td colspan="5">신청한 내역이 없습니다.</td></tr>

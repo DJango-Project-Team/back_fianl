@@ -1,0 +1,19 @@
+{#신청정보 읽기 전용으로 보기#}
+{% extends 'club/main.html' %}
+
+{% block content %}
+<h2>{{ application.club.name }} 신청서 (읽기 전용)</h2>
+
+<form>
+  <p><strong>학번:</strong> {{ application.student_id }}</p>
+  <p><strong>이름:</strong> {{ application.name }}</p>
+  <p><strong>학과:</strong> {{ application.department }}</p>
+  <p><strong>이메일:</strong> {{ application.email }}</p>
+  <p><strong>지원 동기:</strong> {{ application.motivation }}</p>
+  <p><strong>스펙:</strong> {{ application.spec }}</p>
+
+  <a href="{% url 'form_list:my_applications' %}">
+    <button type="button">목록</button>
+  </a>
+</form>
+{% endblock %}
