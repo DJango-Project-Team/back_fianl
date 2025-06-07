@@ -5,26 +5,39 @@ from club.models import Club
 from form_list.models import UserApplication
 from .forms import ApplicationFormModelForm
 
+from .models import Application
+
 @login_required(login_url='/sign/login/')
 def submit_application(request, club_id):
     club = Club.objects.get(id=club_id)
 
     if request.method == 'POST':
-        form = ApplicationFormModelForm(request.POST)
-        if form.is_valid():
-            application = form.save(commit=False)
-            application.user = request.user  # 만약 user 필드가 있다면 추가
-            application.club = club
-            application.save()
-            # UserApplication도 저장
-            UserApplication.objects.create(
-                user=request.user,
-                club=club,
-            )
-            # 추가 처리 (messages 등)
-            return render(request, 'form/apply.html', {'club': club, 'success': True, 'form': form})
+        department = request.POST.get('department')
+        student_id = request.POST.get('student_id')
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        motivation = request.POST.get('motivation')
+        spec = request.POST.get('spec')
 
-    else:
-        form = ApplicationFormModelForm()
+        # 직접 저장
+        Application.objects.create(
+            user=request.user,
+            club=club,
+            department=department,
+            student_id=student_id,
+            name=name,
+            email=email,
+            motivation=motivation,
+            spec=spec
+        )
 
-    return render(request, 'form/apply.html', {'club': club, 'form': form})
+        UserApplication.objects.create(user=request.user, club=club)
+
+        return render(request, 'form/apply.html', {
+            'club': club,
+            'success': True
+        })
+
+    return render(request, 'form/apply.html', {'club': club})
+
+

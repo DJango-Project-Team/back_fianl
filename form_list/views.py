@@ -20,6 +20,6 @@ def application_detail_view(request, application_id):
 @login_required(login_url='/sign/login/')
 def my_applications_view(request):
     applications = UserApplication.objects.filter(user=request.user).order_by('-submitted_at')
-    return render(request, 'form_list/application_list.html', {
+    return render(request, 'form_list/my_applications.html', {
         'applications': applications,
     })

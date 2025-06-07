@@ -1,16 +1,70 @@
 <!-- form/templates/form/apply.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>동아리 가입 신청</title>
+    <link rel="stylesheet" href="{% static 'applyFormStyle.css' %}" />
+    <style>
+      #name, #club {
+        width: 30%;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="{% url 'club:main' %}">
+        <img src="{% static 'images/logo.jpg' %}" class="logo" />
+      </a>
+      <nav>
+        <a href="{% url 'sign:logout' %}" class="nav-link">로그아웃</a>
+        <span class="separator">|</span>
+        <a href="{% url 'form_list:my_applications' %}" class="nav-link">신청내역</a>
+      </nav>
+    </header>
 
-{% if success %}
-  <script>
-    alert("동아리 신청이 완료되었습니다!");
-    window.location.href = "/";  // 메인 페이지 주소로 이동
-  </script>
-{% endif %}
+    <div class="container">
+      <h2>{{ club.name }} 가입 신청</h2>
 
-<h1>{{ club.name }} 신청서</h1>
+      {% if success %}
+        <script>
+          alert("동아리 신청이 완료되었습니다!");
+          window.location.href = "/";
+        </script>
+      {% endif %}
 
-<form action="{% url 'form:apply_club' club.id %}" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">제출</button>
-</form>
+      <form action="{% url 'form:apply_club' club.id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="department">학과</label>
+          <input type="text" id="department" name="department" required />
+        </div>
+        <div class="form-group">
+          <label for="student_id">학번</label>
+          <input type="text" id="student_id" name="student_id" required />
+        </div>
+        <div class="form-group">
+          <label for="name">이름</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">이메일</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="motivation">지원동기</label>
+          <textarea id="motivation" name="motivation" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="spec">관련된 경험</label>
+          <textarea id="spec" name="spec" rows="4"></textarea>
+        </div>
+        <div class="submit">
+          <button type="submit" class="submit-button">신청</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

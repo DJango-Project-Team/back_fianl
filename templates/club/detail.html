@@ -1,12 +1,50 @@
+<!-- 동아리 상세 페이지 -->
+{% load static %}
 <!DOCTYPE html>
-<html>
-<head>
-    <title>{{ club.name }} 상세정보</title>
-</head>
-<body>
-    <h1>{{ club.name }}</h1>
-    <p>{{ club.description }}</p>
-    <a href="{% url 'form:apply_club' club.id %}"><button>신청하기</button></a>
-    <a href="{% url 'main' %}">← 목록으로 돌아가기</a>
-</body>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'clubPage.css' %}" />
+    <title>동아리 상세 페이지</title>
+  </head>
+  <body>
+    <!-- 상단바 -->
+    <header>
+      <a href="{% url 'club:main' %}">
+        <img src="{% static 'images/logo.jpg' %}"  alt="청주대학교 로고" class="logo"/>
+      </a>
+      <nav>
+        <a href="{% url 'sign:logout' %}" class="nav-link">로그아웃</a>
+        <span class="separator">|</span>
+        <a href="{% url 'form_list:my_applications' %}" class="nav-link">신청내역</a>
+      </nav>
+    </header>
+
+    <div class="container club-detail">
+      <div class="club-content">
+        <!-- 왼쪽 -->
+        <div class="poster-section">
+          {% with img_path="images/"|add:club.part|add:"/"|add:club.name|add:".jpg" %}
+            <img src="{% static img_path %}" alt="{{ club.name }}" class="club-poster"
+          {% endwith %}
+
+          <p class="club-description">
+            {{ club.description }}
+          </p>
+        </div>
+
+        <!-- 중간 구분선 -->
+        <div class="divider"></div>
+
+        <!-- 오른쪽 -->
+        <div class="info-section">
+          <h2 class="club-name">{{ club.name }}</h2>
+          <p><strong>모집기간 </strong> <br> 2025.05.01 ~ 2025.05.31</p>
+          <p><strong>분과 </strong> &nbsp; {{ club.part }}</p>
+          <a href="{% url 'form:apply_club' club.id %}" class="apply-button">신청하기</a>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

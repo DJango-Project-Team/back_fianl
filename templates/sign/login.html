@@ -1,25 +1,54 @@
 <!-- templates/sign/login.html -->
+{% load static %}
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>로그인</title>
-</head>
-<body>
-    <h2>로그인</h2>
-    {% if error %}
-        <script>alert("{{ error }}");</script>
-    {% endif %}
-    <form action="{% url "sign:login" %}" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}">
-        <input type="text" name="student_id">
-        <input type="password" name="password">
-        <button type="submit">로그인</button>
-    </form>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <script src="{% static 'transition.js' %}" defer></script>
+  </head>
+  <body>
+    <header>
+      <a href="{% url 'club:main' %}">
+        <img src="{% static 'images/logo.jpg' %}" class="logo" />
+      </a>
+      <nav>
+        <a href="{% url 'sign:login' %}" class="nav-link">로그인</a>
+        <span class="separator">|</span>
+        <a href="{% url 'sign:signup' %}" class="nav-link">회원가입</a>
+      </nav>
+    </header>
 
-    <!-- sign/templates/sign/login.html -->
-    {% if request.GET.message %}
-    <script>alert("{{ request.GET.message }}");</script>
-    {% endif %}
-</body>
+    <main>
+      <div class="login-container">
+        <div class="login-box">
+          <h3>로그인</h3>
+
+          {% if error %}
+            <script>alert("{{ error }}");</script>
+          {% endif %}
+          {% if request.GET.message %}
+            <script>alert("{{ request.GET.message }}");</script>
+          {% endif %}
+
+          <form action="{% url 'sign:login' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+            <input type="text" placeholder="아이디" name="student_id" required />
+            <input type="password" placeholder="비밀번호" name="password" required />
+            <button type="submit">로그인</button>
+          </form>
+        </div>
+
+        <div class="sub-signup-box">
+          <p>처음이신가요 ?</p>
+          <a href="{% url 'sign:signup' %}">
+            <button id="to-signup">회원가입</button>
+          </a>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>

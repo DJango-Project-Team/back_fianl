@@ -7,11 +7,13 @@ def main_view(request):
     clubs = Club.objects.all()
     is_logged_in = request.user.is_authenticated  # 로그인 여부 체크
 
-    return render(request, 'club/main.html', {
+    context = {
         'clubs': clubs,
         'is_logged_in': is_logged_in,
         'user': request.user if is_logged_in else None
-    })
+    }
+
+    return render(request, 'club/main.html', context)
 
 def club_detail_view(request, club_id):
     club = get_object_or_404(Club, id=club_id)

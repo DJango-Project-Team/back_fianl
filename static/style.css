@@ -1,0 +1,179 @@
+body {
+  margin: 0;
+  font-family: "sans-serif";
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 80px 15px 80px;
+  background-color: white;
+}
+
+.logo {
+  height: 50px;
+  padding-left: 50px;
+}
+nav .nav-link {
+  text-decoration: none;
+  color: #8f8f8f;
+  margin: 0 10px;
+  font-weight: bold;
+}
+
+nav span.separator {
+  color: #b8b8b8;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+/* 공통: 로그인/회원가입 컨테이너 */
+.login-container,
+.signup-container {
+  display: flex;
+  padding: 30px;
+  border-radius: 15px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* 공통: 로그인/회원가입 입력 박스 */
+.login-box,
+.signup-box {
+  background-size: cover;
+  background-position: center;
+  padding: 60px 50px;
+  color: white;
+  width: 320px;
+  height: 380px;
+  border: none;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 로그인용 배경 */
+.login-box {
+  background: linear-gradient(rgba(0, 84, 166, 0.8), rgba(0, 84, 166, 0.8)),
+    url('images/로그인img.jpg');
+  background-size: cover;
+  background-position: right -60px bottom ;
+  box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 회원가입용 배경 */
+.signup-box {
+  background: linear-gradient(rgba(0, 84, 166, 0.8), rgba(0, 84, 166, 0.8)),
+    url('images/회원가입img.jpg');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.login-box h3, .signup-box h3 {
+  margin-bottom: 40px;
+}
+
+
+.login-box input,
+.signup-box input {
+  width: 100%;
+  padding-bottom: 11px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border: none;
+  border-bottom: 1px solid #f2f2f2;
+  background: transparent;
+  color: #f2f2f2;
+  font-size: 15px;
+}
+
+.login-box button,
+.signup-box button {
+  margin-top: 20px;
+  background-color: #b8b8b8;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+  float: right;
+}
+
+/* 로그인페이지 회원가입 박스 */
+.sub-signup-box,
+.sub-login-box {
+  background: white;
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sub-signup-box p,
+.sub-login-box p {
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #8f8f8f;
+}
+
+.sub-signup-box button,
+.sub-login-box button {
+  background: white;
+  color: #8f8f8f;
+  border: 1px solid #8f8f8f;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sub-signup-box button:hover,
+.sub-login-box button:hover {
+  color: #ffffff;
+  background-color: #8f8f8f;
+}
+
+/* 로그인-회원가입 애니메이션 */
+
+@keyframes slideIn {
+  from {
+    transform: translateX(20%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-20%);
+    opacity: 0;
+  }
+}
+
+.box-slide-in {
+  animation: slideIn 0.4s ease-in;
+}
+
+.box-slide-out {
+  animation: slideOut 0.4s ease-out;
+}

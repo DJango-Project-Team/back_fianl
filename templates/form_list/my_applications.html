@@ -1,31 +1,65 @@
-<!-- form_list/templates/form_list/my_applications.html -->
-{% extends 'club/main.html' %}
+{% load static %}
 
-{% block content %}
-<h2>신청 내역</h2>
 
-<table border="1">
-    <tr>
-        <th>번호</th>
-        <th>상태</th>
-        <th>동아리 이름</th>
-        <th>신청일</th>
-        <th>상세 내역</th>
-    </tr>
-    {% for app in applications %}
-    <tr>
-        <td>{{ app.display_number }}</td>
-        <td>{{ app.status }}</td>
-        <td>{{ app.club.name }}</td>
-        <td>{{ app.created_at|date:"Y-m-d H:i" }}</td>
-        <td>
-        <a href="{% url 'form_list:application_detail' application.id %}">
-            <button type="button">상세내역 더보기</button>
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>동아리 신청 내역</title>
+    <link rel="stylesheet" href="{% static 'appHistory.css' %}" />
+  </head>
+  <body>
+    <header>
+      <div class="top-bar">
+        <a href="{% url 'club:main' %}">
+            <img src="{% static 'images/logo.jpg' %}" alt="청주대 로고" class="logo"/>
         </a>
-</td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="5">신청한 내역이 없습니다.</td></tr>
-    {% endfor %}
-</table>
-{% endblock %}
+        <div class="auth-links">
+{#          <a href="{% url 'sign:login' %}" class="nav-link">로그인</a>#}
+{#          <span class="separator">|</span>#}
+{#          <a href="{% url 'sign:signup' %}" class="nav-link">회원가입</a>#}
+            {% if user.is_authenticated %}
+                <a href="{% url 'sign:logout' %}" class="nav-link">로그아웃</a>
+                <a href="{% url 'form_list:my_applications' %}" class="nav-link">신청내역</a>
+            {% else %}
+                <a href="{% url 'sign:login' %}" class="nav-link">로그인</a>
+                <a href="{% url 'sign:signup' %}" class="nav-link">회원가입</a>
+            {% endif %}
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <h2>신청내역</h2>
+        <table border="1">
+            <tr>
+                <th>번호</th>
+                <th>상태</th>
+                <th>동아리 이름</th>
+                <th>신청일</th>
+                <th>상세 내역</th>
+            </tr>
+            {% for app in applications %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ app.status }}</td>
+                    <td>{{ app.club.name }}</td>
+                    <td>{{ app.submitted_at|date:"Y-m-d" }}</td>
+                    <td>
+                        <a href="{% url 'form_list:application_detail' app.id %}">
+                            <button type="button">상세내역 더보기</button>
+                        </a>
+                    </td>
+                </tr>
+            {% empty %}
+            <tr><td colspan="5">신청한 내역이 없습니다.</td></tr>
+            {% endfor idx+=1 %}
+        </table>
+    </div>
+
+    <div class="back">
+      <button class="back-button" onclick="location.href='/main'">이전</button>
+    </div>
+  </body>
+</html>
