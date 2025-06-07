@@ -1,7 +1,11 @@
-{#신청정보 읽기 전용으로 보기#}
-{% extends 'club/main.html' %}
-
-{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>신청서 상세 내역</title>
+    {# 추후 CSS 사용 시 static 파일 로드 #}
+    {# {% load static %} #}
+</head>
+<body>
 <h2>{{ application.club.name }} 신청서 (읽기 전용)</h2>
 
 <h2>신청서 상세 내역</h2>
@@ -17,4 +21,5 @@
   <a href="{% url 'form_list:my_applications' %}">
     <button type="button">목록</button>
   </a>
-{% endblock %}
+</body>
+</html>
