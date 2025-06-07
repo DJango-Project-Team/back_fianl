@@ -4,16 +4,18 @@ from django.contrib.auth.decorators import login_required
 from .models import UserApplication
 from form.models import Application
 
-@login_required(login_url='/sign/login/')
+@login_required
 def application_detail_view(request, application_id):
-    user_application = get_object_or_404(UserApplication, id=application_id, user=request.user)
-    application = get_object_or_404(Application, user=request.user, club=user_application.club)
+    application = get_object_or_404(Application, id=application_id)
+
+    if application.user != request.user:
+        return redirect('form_list:my_applications')  # 본인 것이 아님
 
     return render(request, 'form_list/application_detail.html', {
-        'application': application,
+        'application': application
     })
 
-# form_list/views.py
+
 
 @login_required(login_url='/sign/login/')
 def my_applications_view(request):

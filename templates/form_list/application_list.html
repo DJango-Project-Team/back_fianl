@@ -48,9 +48,7 @@
                     <td>{{ app.club.name }}</td>
                     <td>{{ app.submitted_at|date:"Y-m-d" }}</td>
                     <td>
-                        <a href="{% url 'form_list:application_detail' app.id %}">
-                            <button type="button">상세내역 더보기</button>
-                        </a>
+                        <a href="{% url 'form_list:application_detail' app.id %}">상세내역 더보기</a>
                     </td>
                 </tr>
                 {% endfor %}

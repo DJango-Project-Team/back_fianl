@@ -4,16 +4,17 @@
 {% block content %}
 <h2>{{ application.club.name }} 신청서 (읽기 전용)</h2>
 
-<form>
-  <p><strong>학번:</strong> {{ application.student_id }}</p>
-  <p><strong>이름:</strong> {{ application.name }}</p>
-  <p><strong>학과:</strong> {{ application.department }}</p>
-  <p><strong>이메일:</strong> {{ application.email }}</p>
-  <p><strong>지원 동기:</strong> {{ application.motivation }}</p>
-  <p><strong>스펙:</strong> {{ application.spec }}</p>
-
+<h2>신청서 상세 내역</h2>
+<ul>
+    <li><strong>이름:</strong> {{ application.name }}</li>
+    <li><strong>학번:</strong> {{ application.student_id }}</li>
+    <li><strong>학과:</strong> {{ application.department }}</li>
+    <li><strong>이메일:</strong> {{ application.email }}</li>
+    <li><strong>지원 동기:</strong> {{ application.motivation }}</li>
+    <li><strong>스펙:</strong> {{ application.spec }}</li>
+    <li><strong>제출 일자:</strong> {{ application.created_at }}</li>
+</ul>
   <a href="{% url 'form_list:my_applications' %}">
     <button type="button">목록</button>
   </a>
-</form>
 {% endblock %}

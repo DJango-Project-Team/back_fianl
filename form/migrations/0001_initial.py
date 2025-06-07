@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="UserApplication",
+            name="Application",
             fields=[
                 (
                     "id",
@@ -27,14 +27,17 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("status", models.CharField(default="접수", max_length=20)),
-                ("submitted_at", models.DateTimeField(auto_now_add=True)),
+                ("student_id", models.CharField(max_length=20)),
+                ("name", models.CharField(max_length=100)),
+                ("department", models.CharField(max_length=100)),
+                ("email", models.EmailField(max_length=254)),
+                ("motivation", models.TextField()),
+                ("spec", models.TextField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
                 (
                     "club",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="user_applications",
-                        to="club.club",
+                        on_delete=django.db.models.deletion.CASCADE, to="club.club"
                     ),
                 ),
                 (
