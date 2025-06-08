@@ -30,14 +30,11 @@ def submit_application(request, club_id):
             motivation=motivation,
             spec=spec
         )
-
         UserApplication.objects.create(user=request.user, club=club)
-
         return render(request, 'form/apply.html', {
             'club': club,
             'success': True
         })
-
     return render(request, 'form/apply.html', {'club': club})
 
 

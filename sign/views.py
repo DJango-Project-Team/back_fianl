@@ -95,24 +95,15 @@ def signup_view(request):
 def login_view(request):
     next_url_from_get = request.GET.get('next')
     error_message = None # error_message 초기화
-
     if request.method == 'POST':
         student_id_input = request.POST.get('student_id')
         password_input = request.POST.get('password')
-
-        # USERNAME_FIELD가 'student_id'이므로, username 파라미터에 student_id_input을 전달합니다.
         user = authenticate(request=request, username=student_id_input, password=password_input) # request 전달 권장
-        # print(f"Attempting to authenticate user: {student_id_input}") # 디버깅용
         print(f"Authenticated user object: {user}") # 디버깅용
-
         if user is not None:
             if user.is_active:
                 login(request, user) # Django 세션에 사용자 등록
-
                 next_url_from_post = request.POST.get('next')
-                # 'club:main' 대신 실제 존재하는 URL name이나 경로를 사용해야 합니다.
-                # 예: from django.urls import reverse; final_next_url = next_url_from_post or next_url_from_get or reverse('some_app:some_view_name')
-                # 또는 하드코딩: final_next_url = next_url_from_post or next_url_from_get or '/' (메인 페이지)
                 default_next_url = 'club:main' # 이 URL name이 urls.py에 정의되어 있는지 확인 필요
                 try:
                     from django.urls import reverse
@@ -120,7 +111,6 @@ def login_view(request):
                     reverse(default_next_url)
                 except:
                     default_next_url = '/' # club:main이 없다면 루트로
-
                 final_next_url = next_url_from_post or next_url_from_get or default_next_url
                 return redirect(final_next_url)
             else:
@@ -136,20 +126,13 @@ def login_view(request):
             except Exception as e:
                 print(f"An unexpected error occurred during login attempt: {e}")
                 error_message = '로그인 중 오류가 발생했습니다. 다시 시도해주세요.'
-
         # 로그인 실패 시 또는 GET 요청 시 로그인 페이지 렌더링
         return render(request, 'sign/login.html', {
             'error': error_message,
             'next': next_url_from_get or 'club:main' # 'club:main'은 예시, 실제 URL로 대체
         })
-
-    # GET 요청 시 (초기 로그인 페이지 로드)
-    # 회원가입 후 전달된 메시지가 있다면 여기서 처리됩니다.
-    # request.GET.message는 템플릿에서 이미 처리하고 있으므로 여기서 별도 로직 불필요
     return render(request, 'sign/login.html', {
         'next': next_url_from_get or 'club:main', # 'club:main'은 예시, 실제 URL로 대체
-        # GET 요청시 error는 없으므로 전달 안 함 (또는 None 명시적 전달)
-        # 'error': None # 이렇게 하거나, 템플릿에서 if error 조건으로 처리
     })
 
 
